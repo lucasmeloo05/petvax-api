@@ -110,6 +110,41 @@ Acesse a URL informada no terminal (por padrão, `http://127.0.0.1:8000/`)
 
 ---
 
+## Executando com Docker (opcional)
+
+Pré-requisito: Docker Desktop instalado.
+
+```bash
+docker compose up --build
+```
+
+Acesse:
+
+API: http://127.0.0.1:8000/
+
+Docs (Swagger): http://127.0.0.1:8000/api/docs/
+
+
+---
+
+# Erros comuns e como resolver
+
+## “Port 8000 is already allocated”
+Você já tem o Django rodando local.
+- Pare o `runserver` local ou mude no compose para `"8001:8000"`
+
+## “Module not found …” dentro do container
+- Seu `requirements.txt` pode estar incompleto/encoding errado (UTF-8)
+- Rode `docker compose build --no-cache`
+
+## Migrações não aplicando
+- Veja logs: `docker compose logs -f`
+- Entre no container:
+  ```bash
+  docker exec -it petvax_api bash
+  python manage.py migrate
+   ```
+   
 ## 📖 Documentação da API
 
 A documentação interativa da API está disponível em:
