@@ -58,7 +58,7 @@ Superusuários possuem acesso total ao sistema.
 
 ```bash
 git clone https://github.com/lucasmeloo05/petvax-api.git
-cd petvax_api
+cd petvax-api
 ```
 
 ### 2- Crie um ambiente virtual
