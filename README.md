@@ -57,8 +57,8 @@ Superusuários possuem acesso total ao sistema.
 ### 1- Clone o repositório
 
 ```bash
-git clone <url-do-repositorio>
-cd pet_vax
+git clone https://github.com/lucasmeloo05/petvax-api.git
+cd petvax_api
 ```
 
 ### 2- Crie um ambiente virtual
@@ -67,9 +67,15 @@ cd pet_vax
 python -m venv .venv
 ```
 
-Windows:
+Windows (Funcional apenas no Prompt de Comando):
 ```bash
 .venv\Scripts\activate
+```
+
+Powershell:
+````bash
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+.\.venv\Scripts\Activate.ps1
 ```
 
 Linux/Mac:
