@@ -1,4 +1,4 @@
-# PetVax API - Sistema Vacinação de Pets
+# PetVax API - Sistema de Vacinação de Pets
 
 API REST desenvolvida com Django e Django REST Framework para gerenciamento de pets, vacinas e registros de vacinação, implementando autenticação JWT e controle de acesso baseado em papéis (RBAC).
 
