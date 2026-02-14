@@ -8,12 +8,14 @@ API REST desenvolvida com Django e Django REST Framework para gerenciamento de p
 
 O sistema foi desenvolvido para clínicas veterinárias que necessitam:
 
-- Cadastrar pets e seus responsáveis
-- Cadastrar vacinas disponíveis
-- Registrar aplicações de vacinas
-- Controlar histórico de vacinação
-- Garantir que apenas funcionários possam registrar vacinações
-- Permitir que donos visualizem apenas seus próprios pets
+- Cadastro de usuários (responsáveis) com autenticação
+- Cadastro de pets vinculados a seus respectivos responsáveis
+- Cadastro de vacinas disponíveis
+- Registro de aplicações de vacinas
+- Controle do histórico de vacinação
+- Garantia de que apenas funcionários possam registrar vacinações
+- Restrição de visualização para que cada responsável veja apenas seus próprios pets
+
 
 A API segue o padrão RESTful e implementa controle de acesso baseado em papéis (CLIENTE e FUNCIONARIO).
 
@@ -49,6 +51,9 @@ O sistema utiliza dois papéis principais:
 - Pode gerenciar pets (conforme regra definida)
 
 Superusuários possuem acesso total ao sistema.
+
+> O endpoint `/api/accounts/register/` é público para facilitar criação de contas de CLIENTE.
+> Contas de FUNCIONARIO devem ser criadas via Django Admin (ou endpoints restritos, se implementados).
 
 ---
 
@@ -144,6 +149,15 @@ Você já tem o Django rodando local.
   docker exec -it petvax_api bash
   python manage.py migrate
    ```
+
+## Ambiente de Produção
+
+Este projeto utiliza `python manage.py runserver`, que é o servidor **de desenvolvimento** do Django.
+Para fins do desafio técnico e execução local isso é suficiente.
+
+Em produção, recomenda-se utilizar um servidor WSGI/ASGI apropriado (ex.: Gunicorn/Uvicorn) atrás de um proxy (ex.: Nginx),
+além de configurações como `DEBUG=False`, variáveis de ambiente, logs e banco de dados dedicado (PostgreSQL/MySQL).
+
    
 ## 📖 Documentação da API
 
@@ -180,6 +194,13 @@ Isso permitirá testar endpoints protegidos diretamente pela interface web.
 | PATCH | `/api/pets/{id}/` | Atualiza parcialmente |
 | PUT | `/api/pets/{id}/` | Atualiza completamente |
 | DELETE | `/api/pets/{id}/` | Remove pet |
+
+#### Observações sobre associação de responsável
+
+- Os campos `owner_username` e `owner_email` são retornados na resposta para facilitar a identificação do responsável pelo pet.
+- O campo `owner_id` pode ser informado no POST/PUT apenas por usuários com papel FUNCIONARIO ou superusuários.
+- Caso `owner_id` não seja informado, o pet será automaticamente associado ao usuário autenticado que realizou a requisição.
+
 
 ### Vacinas
 | Método | Endpoint | Permissão |

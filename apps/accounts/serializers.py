@@ -1,23 +1,21 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
 from rest_framework import serializers
-from apps.accounts.roles import ROLE_CLIENTE
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, min_length=6)
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
         fields = ["id", "username", "email", "password"]
 
     def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data["username"],
-            email=validated_data.get("email", ""),
-            password=validated_data["password"],
-        )
+        password = validated_data.pop("password")
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
 
-        #Colocar usuário como Cliente
-        cliente_group = Group.objects.get(name=ROLE_CLIENTE)
-        user.groups.add(cliente_group)
+        #Força grupo CLIENTE
+        group, _ = Group.objects.get_or_create(name="CLIENTE")
+        user.groups.add(group)
 
         return user
