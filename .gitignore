@@ -6,7 +6,7 @@ __pycache__/
 .venv/
 
 # Database
-data/db.sqlite3
+db.sqlite3
 
 # VSCode
 .vscode/
