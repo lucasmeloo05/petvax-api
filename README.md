@@ -73,7 +73,7 @@ Windows (Funcional apenas no Prompt de Comando):
 ```
 
 Powershell:
-````bash
+```bash
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 .\.venv\Scripts\Activate.ps1
 ```
